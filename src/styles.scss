@@ -1,0 +1,114 @@
+body {
+  background-color: white;
+}
+
+@media only screen and (min-width: 900px) {
+  .pageContainer {
+    padding-top: 5.5%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .pageContainer {
+    padding-top: 13.5%;
+  }
+}
+
+/* a href links in the site*/
+.pageContainer a {
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: none;
+  color: #414272;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* this is the main div that will hold the page contents, not including the page titles*/
+#pageContent {
+  display: flex;
+  align-items: center;
+
+  > div {
+    width: 100%;
+    font-size: 1.1em;
+  }
+}
+
+/* generic  page title css, not used for the home page*/
+#pageTitle {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6em;
+}
+
+.flexCols {
+  flex-direction: column;
+}
+.flexRow {
+  flex-direction: row;
+}
+
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 4;
+}
+
+/*used if there is no parallax image being used*/
+.noBGImage {
+  min-height: 250px;
+}
+
+.pageLogoImg {
+  padding-top: 10px;
+  height: 50%;
+  width: 75%;
+}
+
+.logoDiv {
+  width: 75%;
+}
+
+.morethanImg {
+  padding-top: 10px;
+  content: url("../src/assets/images/more-than.png");
+  height: 75%;
+  width: 50%;
+}
+
+.morethan {
+  width: 100%;
+  text-align: right;
+}
+
+.rainbowBar {
+  background-image: url("../src/assets/images/coloured-banner.jpg");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 10px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 900px) {
+  #pageContent {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,34 @@
+
+#accreditationFooter{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items:center;
+  padding-bottom: 10px;
+
+  .accreditation3{
+    content: url("../../assets/images/footer-logo-1.png");
+    width: 15%;
+  }
+
+   .accreditation1{
+    content: url("../../assets/images/footer-logo-2.png");
+    width: 15%;
+  }
+  .accreditation2{
+    content: url("../../assets/images/footer-logo-3.jpeg");
+    width: 5%;
+  }
+
+}
+#footer {
+
+  background-color: #031131;
+  bottom: 0px;
+  color: white;
+  text-align: center;
+  font-size: 0.75em;
+  padding: 5px;
+  min-height: 5%;
+}

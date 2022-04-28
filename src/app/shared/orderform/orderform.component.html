@@ -1,0 +1,236 @@
+<div id="DevDiv">
+  {{devArea}}
+</div>
+<mat-stepper>
+  <mat-step label="Please select your order type" class="step1" style="border: 1px solid black">
+    <button mat-button matStepperNext *ngFor="let item of productsTypes;" (click)="selectedProduct(item.id)">
+      {{item.name}}</button>
+  </mat-step>
+  <!-- contacts section -->
+  <mat-step label="Please enter your contacts details" class="step2" [stepControl]="ContactDetailsFormGroup">
+    <div id="step2Container">
+
+      <form [formGroup]="ContactDetailsFormGroup">
+        <div class="buttonSection">
+
+          <button mat-button mat-raised-button color="primary" matStepperNext>Next only</button>
+
+          <button mat-button matStepperPrevious type="button" [hidden]="beingEdited">Back</button>
+          <button mat-button mat-raised-button color="primary" (click)="addContact(2)"
+            [hidden]="beingEdited || !isCovid || contacts.length == 0" [disabled]="ContactDetailsFormGroup.invalid">Add
+            Contact</button>
+          <button mat-button mat-raised-button color="primary" (click)="updateContact()" [hidden]="!beingEdited">Save
+            Updated Changes</button>
+          <button mat-button mat-raised-button color="primary" matStepperNext
+            [disabled]="ContactDetailsFormGroup.invalid" (click)="addContact(1)" [hidden]="beingEdited">Next</button>
+        </div>
+        <ng-template matStepLabel>Fill out your details
+        </ng-template>
+        <div class="section1">
+          <mat-form-field>
+            <input matInput placeholder="First name" formControlName="firstNameCtrl" required
+              [(ngModel)]="newContact.firstName">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Last name" formControlName="lastNameCtrl" required
+              [(ngModel)]="newContact.lastName">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="pickerdob" formControlName="dobCtrl" [(ngModel)]="newContact.dob">
+            <mat-datepicker-toggle matSuffix [for]="pickerdob"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdob></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Gender</mat-label>
+            <select matNativeControl required formControlName="genderCtrl" [(ngModel)]="newContact.gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="emailCtrl" required [(ngModel)]="newContact.email">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Phone No" formControlName="phoneCtrl" required required
+              [(ngModel)]="newContact.phone">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Ethnicity</mat-label>
+            <select matNativeControl required formControlName="ethnicityCtrl" required
+              [(ngModel)]="newContact.ethnicity">
+              <option value="White">White</option>
+              <option value="Other">Other</option>
+            </select>
+          </mat-form-field>
+        </div>
+        <div class="section2">
+          <div class="homeAddress">
+            <div class="homeHeader">Home Address</div>
+            <mat-form-field>
+              <input matInput placeholder="Address Line 1" formControlName="hAddress1Ctrl" required
+                [(ngModel)]="newContact.hAddress1">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Address Line 2" formControlName="hAddress2Ctrl" required
+                [(ngModel)]="newContact.hAddress2">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="City" formControlName="hCityCtrl" required [(ngModel)]="newContact.hCity">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Postcode" formControlName="hPostcodeCtrl" required
+                [(ngModel)]="newContact.hPostcode">
+            </mat-form-field>
+            <mat-checkbox [hidden]="!isCovid" name="duplicateAddress" (change)="duplicateAddress($event)">
+              Is this also your quarantine address?
+            </mat-checkbox>
+
+          </div>
+          <div class="quarantineAddress" [hidden]="!isCovid">
+            <div class="quarantineHeader">Quarantine Address</div>
+            <mat-form-field>
+              <input matInput placeholder="Address Line 1" formControlName="qAddress1Ctrl" required
+                [(ngModel)]="newContact.qAddress1">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Address Line 2" formControlName="qAddress2Ctrl" required
+                [(ngModel)]="newContact.qAddress2">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="City" formControlName="qCityCtrl" required [(ngModel)]="newContact.qCity">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Postcode" formControlName="qPostcodeCtrl" required
+                [(ngModel)]="newContact.qPostcode">
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="section3" [hidden]="!isCovid">
+          <mat-form-field>
+            <input matInput placeholder="Passport No" formControlName="passportCtrl" required
+              [(ngModel)]="newContact.passport">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="NHS No" formControlName="nhsCtrl" required [(ngModel)]="newContact.nhs">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Vaccination Status</mat-label>
+            <select matNativeControl required formControlName="vaccCtrl" [(ngModel)]="newContact.vaccStatus">
+              <option value="Vaccinated (Full Program Complete)">Vaccinated (Full Program Complete)</option>
+              <option value="In Progress (Part Administered)">In Progress (Part Administered)</option>
+              <option value="Unvaccinated">Unvaccinated</option>
+            </select>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Date of Departure from the UK</mat-label>
+
+            <input matInput [matDatepicker]="pickerdod" formControlName="dodCtrl" [(ngModel)]="newContact.dod">
+            <mat-datepicker-toggle matSuffix [for]="pickerdod"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdod></mat-datepicker>
+
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Date of expected return to the UK</mat-label>
+
+            <input matInput [matDatepicker]="pickerdoe" formControlName="doeCtrl" [(ngModel)]="newContact.doe">
+            <mat-datepicker-toggle matSuffix [for]="pickerdoe"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdoe></mat-datepicker>
+
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Date departing overseas territory for return to the UK</mat-label>
+
+            <input matInput [matDatepicker]="pickerdodo" formControlName="dodoCtrl" [(ngModel)]="newContact.dodo">
+            <mat-datepicker-toggle matSuffix [for]="pickerdodo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdodo></mat-datepicker>
+
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Countries travelled through in last 14 days?</mat-label>
+            <input matInput placeholder="" formControlName="cTravelCtrl" required
+              [(ngModel)]="newContact.countriesTravelledThrough">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Flight, vessel, train, bus, route number on return to the UK</mat-label>
+            <input matInput placeholder="" formControlName="travelDetailsCtrl" required
+              [(ngModel)]="newContact.travelDetails">
+          </mat-form-field>
+        </div>
+
+        <div class="buttonSection">
+          <button mat-button matStepperPrevious type="button" [hidden]="beingEdited">Back</button>
+          <button mat-button mat-raised-button color="primary" (click)="addContact(2)"
+            [hidden]="beingEdited || !isCovid || contacts.length == 0" [disabled]="ContactDetailsFormGroup.invalid">Add
+            another
+            Contact</button>
+          <button mat-button mat-raised-button color="primary" (click)="updateContact()" [hidden]="!beingEdited">Save
+            Updated Changes</button>
+          <button mat-button mat-raised-button color="primary" matStepperNext
+            [disabled]="ContactDetailsFormGroup.invalid" (click)="addContact(1)" [hidden]="beingEdited">Next</button>
+        </div>
+      </form>
+
+      <div [hidden]="contacts.length <=0 ">
+        list of details added
+        <mat-accordion hideToggle>
+          <mat-expansion-panel *ngFor="let contact of contacts; let i = index;">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ i + " " + contacts.length + " "+ contact.firstName + " " + contact.lastName}}
+
+              </mat-panel-title>
+              <mat-panel-description> <button (click)="editContact(contact)">Edit</button>
+                <button (click)="deleteContact(i)" [hidden]="contacts.length <=1">Delete</button>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            add extra details here
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <!-- products section -->
+  </mat-step>
+  <mat-step label="Please select your order items" class="step3">
+    <div id="step3Container">
+      <div class="covidSection" [hidden]="!isCovid">
+        <div class="covidSectionHeader">Covid Tests</div>
+      </div>
+      <div class="wellnessSection" [hidden]="isCovid">
+        <div class="wellnessSuites">
+          <div class="wellnessSuitesHeader">Wellness Suites</div>
+          <mat-selection-list #suites (selectionChange)="selectSuites(suites.selectedOptions.selected)">
+            <mat-list-option *ngFor="let suite of wellnessItems[0].suites;" [value]="">
+              {{suite.name}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div class="wellnessTests">
+          <div class="wellnessTestsHeader">Wellness Tests</div>
+          <mat-selection-list #individual (selectionChange)="selectIndividual(individual.selectedOptions.selected)">
+            <mat-list-option *ngFor="let test of wellnessItems[0].individual;">
+              {{test.name}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </div>
+
+    </div>
+
+    <button mat-button matStepperPrevious type="button" (click)="backToContacts()">Back</button>
+    <button type="button" (click)="gotoConfirmAndSave()">Next</button>
+  </mat-step>
+  <mat-step label="Confirm and Save" class="step4">
+  </mat-step>
+  <mat-step class="complete">
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+  </mat-step>
+</mat-stepper>

@@ -1,0 +1,19 @@
+.parallaxBackgroundImg {
+  //background-image: url("../../../../assets/images/2030-square.jpeg");
+}
+
+.pageLogoImg {
+  content: url("../../../../assets/images/2030-LOGO_no\ title.png");
+}
+
+#pageContent {
+  flex-wrap: wrap;
+}
+
+.info {
+  flex-basis: 100%;
+}
+[class^="accr"] {
+  flex-basis: 50%;
+  padding: 15px;
+}
